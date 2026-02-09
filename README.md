@@ -3,9 +3,9 @@
 ## 📌 프로젝트 개요
 - **프로젝트명**: AI 기반 전월세계약서 리스크 분석 법률 RAG 챗봇
 - **개발 기간**: 2026.01.12 - 2026.02.10 (4주)
-TEAM 안전한家
-박상용 김재학 김지훈 김효경
-[KDT] 기업맞춤형 AI+X 융복합 인재 양성 과정 2차 팀프로젝트
+- TEAM 안전한家
+- 박상용 김재학 김지훈 김효경
+- [KDT] 기업맞춤형 AI+X 융복합 인재 양성 과정 2차 팀프로젝트
 
 # 🏠 법률 AI 상담 챗봇 (Housing Legal AI Chatbot)
 
@@ -401,7 +401,7 @@ class RAGConfig:
 ## 📁 프로젝트 구조
 
 ```
-7_app/
+/
 │
 ├── 📄 README.md                    # 이 문서
 ├── 📄 requirements.txt             # Python 의존성
@@ -586,7 +586,7 @@ curl -X POST http://localhost:8000/api/chat/ \
 
 ## ⚙ 설정 커스터마이징
 
-### RAGConfig 옵션 조정
+### RAGConfig 옵션 조정 (필요 시)
 
 `chatbot_app/chatbot/views.py`에서 파이프라인 설정 변경:
 
