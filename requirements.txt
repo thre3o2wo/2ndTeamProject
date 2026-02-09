@@ -64,10 +64,10 @@ pillow>=10.0.0
 
 # --- OCR Engines (choose one or both) ---
 pytesseract>=0.3.10
-# easyocr>=1.7.0  # Optional: requires PyTorch, heavier but better for Korean
+easyocr>=1.7.0  # Optional: requires PyTorch, heavier but better for Korean
 
 # ====================================
 # Optional / Development
 # ====================================
 # streamlit>=1.30.0  # For standalone UI (not needed for Django)
-# docx2txt>=0.8  # For docx file loading
+# docx2txt>=0.8  # For docx file loading while preprocessing
