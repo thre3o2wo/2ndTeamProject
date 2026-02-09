@@ -29,6 +29,7 @@
 10. [API 사용법](#-api-사용법)
 11. [설정 커스터마이징](#-설정-커스터마이징)
 12. [문제 해결](#-문제-해결)
+13. [Presentation](#-Presentation)
 
 ---
 
@@ -694,3 +695,7 @@ print(f"Rerank enabled: {rag.cfg.enable_rerank}")
 - [LangChain 문서](https://python.langchain.com/)
 - [Upstage API](https://developers.upstage.ai/)
 - [Cohere Rerank](https://docs.cohere.com/reference/rerank)
+
+---
+## 📽 Presentation
+
