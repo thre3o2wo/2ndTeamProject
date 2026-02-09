@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>법률 AI 상담</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg-color: #111116;
+            --sidebar-color: #1a1a2e;
+            --chat-bg: #161622;
+            --primary: #6366f1;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --user-bubble: #2d2d3f;
+            --bot-bubble: #1e1e2d;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --border-color: #3f3f46;
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(17, 17, 22, 0.8);
+            --code-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg-color: #ffffff;
+            --sidebar-color: #f8fafc;
+            --chat-bg: #ffffff;
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --user-bubble: #e0e7ff;
+            --bot-bubble: #f3f4f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --input-bg: #f9fafb;
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --code-bg: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-color);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            flex-shrink: 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .new-chat-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .new-chat-btn:hover {
+            background-color: var(--bot-bubble);
+            border-color: var(--primary);
+        }
+
+        /* Toggle Switch */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: var(--bot-bubble);
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background-color: #4b5563;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-switch {
+            background-color: var(--primary);
+        }
+
+        [data-theme="light"] .toggle-switch::after {
+            transform: translateX(20px);
+        }
+
+        /* Footer */
+        .sidebar-footer {
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        /* Main Chat Area */
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-color);
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        /* Header */
+        .chat-header {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .chat-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* [Light Mode] Status Badge adjustment */
+        [data-theme="light"] .status-badge {
+            background: #d1fae5;
+            color: #059669;
+            border-color: #a7f3d0;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #34d399;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        [data-theme="light"] .status-dot {
+            background-color: #059669;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(52, 211, 153, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+            }
+        }
+
+        /* Messages */
+        .messages-container {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message-wrapper {
+            display: flex;
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .message-wrapper.user {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .bot .avatar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .user .avatar {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .message-content {
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 80%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .user .message-content {
+            background-color: var(--user-bubble);
+            color: var(--text-primary);
+            /* Adjusted for light mode readability */
+            border-top-right-radius: 4px;
+        }
+
+        [data-theme="light"] .user .message-content {
+            color: #1a1a2e;
+            /* Darker text on light blue bubble */
+        }
+
+        .bot .message-content {
+            background-color: var(--bot-bubble);
+            border: 1px solid var(--border-color);
+            border-top-left-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        /* Markdown Styling inside messages */
+        .message-content h1,
+        .message-content h2,
+        .message-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .message-content h1 {
+            font-size: 1.4rem;
+        }
+
+        .message-content h2 {
+            font-size: 1.2rem;
+        }
+
+        .message-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .message-content strong {
+            color: var(--primary);
+        }
+
+        .message-content code {
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #ea580c;
+            /* Orange-600 */
+        }
+
+        [data-theme="dark"] .message-content code {
+            color: #fdba74;
+            /* Orange-300 */
+        }
+
+        .message-content ul,
+        .message-content ol {
+            padding-left: 1.5rem;
+        }
+
+        /* Input Area */
+        .input-container {
+            padding: 2rem;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .input-box {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 0.5rem;
+            transition: ring 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.8rem;
+            font-size: 1rem;
+            resize: none;
+            height: 56px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .send-btn {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .send-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+        }
+
+        .send-btn:disabled {
+            background: #9ca3af;
+            cursor: default;
+            transform: none;
+        }
+
+        /* Loading Animation */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 0.5rem 0;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-secondary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .chat-header {
+                padding: 1rem;
+            }
+
+            .messages-container {
+                padding: 1rem;
+            }
+
+            .message-content {
+                max-width: 90%;
+            }
+        }
+
+        /* File Upload Styles */
+        .file-upload-btn {
+            background: transparent;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        .file-upload-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .attached-files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--bot-bubble);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .file-chip .remove-file {
+            cursor: pointer;
+            color: #ef4444;
+            font-weight: bold;
+            margin-left: 0.3rem;
+        }
+
+        .file-chip .remove-file:hover {
+            color: #dc2626;
+        }
+
+        .input-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0.8rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .message-attachment {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 4px;
+        }
+
+        /* Normalized Query & References Styles */
+        .query-info {
+            background: var(--bot-bubble);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .query-info-label {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .normalized-query {
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .references-panel {
+            background: var(--bot-bubble);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .references-panel .ref-title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .references-panel .ref-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .references-panel .ref-item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border-color);
+            line-height: 1.4;
+        }
+
+        .references-panel .ref-item:last-child {
+            border-bottom: none;
+        }
+
+        .references-panel .ref-index {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            margin-right: 0.4rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <span style="font-size: 1.5rem;">⚖️</span> 법률 AI 상담
+        </div>
+        <button class="new-chat-btn" onclick="location.reload()">
+            <span>+</span> 새로운 대화
+        </button>
+
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <div class="theme-label">
+                <span id="theme-icon">🌙</span> <span id="theme-text">다크 모드</span>
+            </div>
+            <div class="toggle-switch"></div>
+        </div>
+
+        <div style="flex: 1; margin-top: 2rem;">
+            <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 1rem; font-weight: 600;">상담 팁
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                • 전세 보증금 문제<br>
+                • 계약 갱신 요구권<br>
+                • 임대차 계약서 작성<br>
+                • 묵시적 갱신<br>
+                • 수선 의무 분쟁
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            v1.3 Premium Edition<br>
+            Powered by RAG Module
+        </div>
+    </div>
+
+    <!-- Main Chat -->
+    <div class="main-chat">
+        <div class="chat-header">
+            <div class="chat-title">주택 임대차 법률 상담</div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                AI 모델 연결됨
+            </div>
+        </div>
+
+        <div class="messages-container" id="messages">
+            <!-- Initial Bot Message -->
+            <div class="message-wrapper bot">
+                <div class="avatar">⚖️</div>
+                <div class="message-content">
+                    안녕하세요! <strong>주택 임대차 전월세 전문 법률 상담 AI</strong>입니다.<br><br>
+                    궁금하신 법률 문제를 말씀해 주시면, 최신 법령과 판례를 기반으로 답변해 드립니다.
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-box">
+                <!-- Attached files preview -->
+                <div class="attached-files" id="attachedFiles"></div>
+
+                <textarea id="userInput" placeholder="질문을 입력하세요... (예: 전세 보증금을 못 받고 있어요)"
+                    onkeydown="checkEnter(event)"></textarea>
+
+                <div class="input-actions">
+                    <!-- File upload button -->
+                    <label class="file-upload-btn">
+                        <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff"
+                            style="display:none;" onchange="handleFileSelect(event)">
+                        📎 파일 첨부
+                    </label>
+
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24" fill="none" class="feather">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div style="text-align: center; color: var(--text-secondary); font-size: 0.75rem; margin-top: 1rem;">
+                AI 답변은 법적 효력이 없으며 참고용으로만 활용하세요. 📄 PDF/이미지 파일을 첨부하면 OCR로 분석됩니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const fileInput = document.getElementById('fileInput');
+        const attachedFilesContainer = document.getElementById('attachedFiles');
+
+        // Track attached files
+        let attachedFiles = [];
+
+        // Theme Management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                updateThemeUI(true);
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const isLight = currentTheme === 'light';
+
+            if (isLight) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                updateThemeUI(false);
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                updateThemeUI(true);
+            }
+        }
+
+        function updateThemeUI(isLight) {
+            themeIcon.textContent = isLight ? '☀️' : '🌙';
+            themeText.textContent = isLight ? '라이트 모드' : '다크 모드';
+        }
+
+        // Initialize theme on load
+        initTheme();
+
+        function checkEnter(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // Build user message display with attachments
+            const attachmentNames = attachedFiles.map(f => f.name);
+
+            // 1. Add User Message (with attachment info)
+            appendMessage(text, 'user', attachmentNames);
+            userInput.value = '';
+
+            // 2. Add Loading State
+            const loadingId = appendLoading();
+
+            try {
+                let response;
+
+                if (attachedFiles.length > 0) {
+                    // 3a. API Call with files (multipart/form-data)
+                    const formData = new FormData();
+                    formData.append('message', text);
+                    attachedFiles.forEach(file => {
+                        formData.append('files', file);
+                    });
+
+                    response = await fetch('/api/chat/', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } else {
+                    // 3b. API Call without files (JSON)
+                    response = await fetch('/api/chat/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: text })
+                    });
+                }
+
+                const data = await response.json();
+
+                // 4. Remove Loading
+                removeMessage(loadingId);
+
+                // 5. Add Bot Response
+                if (data.error) {
+                    appendMessage('❌ 오류가 발생했습니다: ' + data.error, 'bot');
+                } else {
+                    // Display normalized query first
+                    if (data.normalized_query && data.normalized_query !== text) {
+                        appendQueryInfo(data.normalized_query);
+                    }
+
+                    // Display references panel
+                    if (data.references && data.references.length > 0) {
+                        appendReferencesPanel(data.references);
+                    }
+
+                    // Display LLM answer
+                    appendMarkdownMessage(data.response, 'bot');
+                }
+
+            } catch (error) {
+                removeMessage(loadingId);
+                appendMessage('❌ 네트워크 연결에 실패했습니다.', 'bot');
+            }
+
+            // Clear attached files after sending
+            attachedFiles = [];
+            renderAttachedFiles();
+        }
+
+        // File handling functions
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            attachedFiles = [...attachedFiles, ...files];
+            renderAttachedFiles();
+            // Reset input to allow re-selecting same file
+            fileInput.value = '';
+        }
+
+        function renderAttachedFiles() {
+            attachedFilesContainer.innerHTML = '';
+            attachedFiles.forEach((file, index) => {
+                const chip = document.createElement('div');
+                chip.className = 'file-chip';
+                chip.innerHTML = `
+                    📄 ${file.name}
+                    <span class="remove-file" onclick="removeFile(${index})">×</span>
+                `;
+                attachedFilesContainer.appendChild(chip);
+            });
+        }
+
+        function removeFile(index) {
+            attachedFiles.splice(index, 1);
+            renderAttachedFiles();
+        }
+
+        function appendMessage(text, sender, attachmentNames = []) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = sender === 'bot' ? '⚖️' : '👤';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+
+            // Add attachment info for user messages
+            let attachmentHtml = '';
+            if (sender === 'user' && attachmentNames.length > 0) {
+                attachmentHtml = `<div class="message-attachment">📎 ${attachmentNames.join(', ')}</div>`;
+            }
+
+            content.innerHTML = attachmentHtml + `<div style="white-space: pre-wrap;">${escapeHtml(text)}</div>`;
+
+            if (sender === 'bot') {
+                wrapper.appendChild(avatar);
+                wrapper.appendChild(content);
+            } else {
+                wrapper.appendChild(content);
+                wrapper.appendChild(avatar);
+            }
+
+            messagesContainer.appendChild(wrapper);
+            scrollToBottom();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function appendMarkdownMessage(markdownText, sender) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = '⚖️';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            // Parse Markdown
+            content.innerHTML = marked.parse(markdownText);
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(content);
+
+            messagesContainer.appendChild(wrapper);
+            scrollToBottom();
+        }
+
+        function appendLoading() {
+            const id = 'loading-' + Date.now();
+            const wrapper = document.createElement('div');
+            wrapper.className = 'message-wrapper bot';
+            wrapper.id = id;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = '⚖️';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.innerHTML = `
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(content);
+            messagesContainer.appendChild(wrapper);
+            scrollToBottom();
+            return id;
+        }
+
+        function removeMessage(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Display normalized query info
+        function appendQueryInfo(normalizedQuery) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'message-wrapper bot';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = '🔍';
+
+            const content = document.createElement('div');
+            content.className = 'query-info';
+            content.innerHTML = `
+                <div class="query-info-label">🔄 표준화된 질문</div>
+                <div class="normalized-query">"${escapeHtml(normalizedQuery)}"</div>
+            `;
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(content);
+            messagesContainer.appendChild(wrapper);
+            scrollToBottom();
+        }
+
+        // Display references panel
+        function appendReferencesPanel(references) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'message-wrapper bot';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = '📚';
+
+            const content = document.createElement('div');
+            content.className = 'references-panel';
+
+            let refItems = references.slice(0, 10).map((ref, index) =>
+                `<li class="ref-item"><span class="ref-index">${index + 1}</span>${escapeHtml(ref)}</li>`
+            ).join('');
+
+            const showMore = references.length > 10 ?
+                `<li class="ref-item" style="text-align:center; color: var(--primary);">... 외 ${references.length - 10}개 참조</li>` : '';
+
+            content.innerHTML = `
+                <div class="ref-title">📖 검색된 법령/판례 (${references.length}건)</div>
+                <ul class="ref-list">${refItems}${showMore}</ul>
+            `;
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(content);
+            messagesContainer.appendChild(wrapper);
+            scrollToBottom();
+        }
+    </script>
+</body>
+
+</html>
