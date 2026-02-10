@@ -17,7 +17,7 @@
 
 ## 📑 목차
 
-1. [Presentation](#-Presentation)
+1. [Project Overview](#-Project-Overview)
 2. [시스템 개요](#-시스템-개요)
 3. [전체 파이프라인 아키텍처](#-전체-파이프라인-아키텍처)
 4. [주요 기능](#-주요-기능)
@@ -32,7 +32,34 @@
 13. [문제 해결](#-문제-해결)
 
 ---
-## 📽 Presentation
+## 📽 Project Overview
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (0)" src="https://github.com/user-attachments/assets/7d47b472-5533-4409-94e4-2f551c9edac0" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (1)" src="https://github.com/user-attachments/assets/0e257f0d-f2e7-4af0-836f-41b0c22a402c" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (2)" src="https://github.com/user-attachments/assets/a359fb42-29cd-4ef9-a3e7-d8db9cd61324" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (3)" src="https://github.com/user-attachments/assets/93e1d4d9-81ea-42e6-87c9-ac83f9edfaa2" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (4)" src="https://github.com/user-attachments/assets/6f49251d-6846-4314-be0a-fc961d1a1ef3" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (5)" src="https://github.com/user-attachments/assets/0a77619f-756b-4306-b779-cc4f75f479c4" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (6)" src="https://github.com/user-attachments/assets/d6fd7faa-981c-488e-82d4-37cc72b96ebd" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (7)" src="https://github.com/user-attachments/assets/79c39dda-36fc-4760-a171-0fd311800b45" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (8)" src="https://github.com/user-attachments/assets/f75f856f-d453-43ee-8d06-95d2e475b81e" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (9)" src="https://github.com/user-attachments/assets/65de1c2f-38e5-4733-ab81-26155919aa66" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (10)" src="https://github.com/user-attachments/assets/f640b531-533a-4f98-82e5-0ab953b3424b" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (11)" src="https://github.com/user-attachments/assets/847d8de9-3666-44e3-8334-09e2b5699785" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (12)" src="https://github.com/user-attachments/assets/8febe92b-006b-4fe0-94c3-11658e6ccd0d" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (13)" src="https://github.com/user-attachments/assets/6b3ab8f6-8cf8-495c-a310-8508c3a84363" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (14)" src="https://github.com/user-attachments/assets/f2b98a7f-73f2-4023-a921-6b2588319136" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (15)" src="https://github.com/user-attachments/assets/cef715ca-d3c5-4973-ba29-c24ccb2cf343" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (16)" src="https://github.com/user-attachments/assets/a4c89f8a-47d1-46ba-92e6-04ef25d61a39" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (17)" src="https://github.com/user-attachments/assets/9588d4c3-0c77-4892-8f0a-11314aec38df" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (18)" src="https://github.com/user-attachments/assets/ede84f53-160a-4954-9488-1c87c3c6f132" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (19)" src="https://github.com/user-attachments/assets/4202912a-ceb2-4449-bcd5-1828fcbb445d" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (20)" src="https://github.com/user-attachments/assets/6a0d9c7b-8c6a-46a6-a74b-7ce7d2cc97cb" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (21)" src="https://github.com/user-attachments/assets/a174a34a-383b-470e-8486-eb9bc943cd91" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (22)" src="https://github.com/user-attachments/assets/aab422d4-4f55-4046-ab87-30b9f2352055" />
+
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (24)" src="https://github.com/user-attachments/assets/26ed3600-488a-43e0-895d-e6af7b47ac2e" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (25)" src="https://github.com/user-attachments/assets/2e097902-e11f-4575-b1c3-92e2b7e86167" />
+<img width="1280" height="720" alt="Legal AI Chatbot Project Report (26)" src="https://github.com/user-attachments/assets/6c9c54d8-bc75-406b-9813-350dc0c8247c" />
 
 ---
 ## 🎯 시스템 개요
