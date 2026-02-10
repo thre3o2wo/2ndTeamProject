@@ -57,7 +57,7 @@
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (21)" src="https://github.com/user-attachments/assets/a174a34a-383b-470e-8486-eb9bc943cd91" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (22)" src="https://github.com/user-attachments/assets/aab422d4-4f55-4046-ab87-30b9f2352055" />
 
-[![시연 영상 링크](https://img.youtube.com/vi/GFpilFkehSo/0.jpg)](https://www.youtube.com/watch?v=GFpilFkehSo)
+[![시연 영상 링크](https://img.youtube.com/vi/GFpilFkehSo/0.jpg)](https://www.youtube.com/watch?v=GFpilFkehSo) 👈 시연 영상 링크
 
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (24)" src="https://github.com/user-attachments/assets/26ed3600-488a-43e0-895d-e6af7b47ac2e" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (25)" src="https://github.com/user-attachments/assets/2e097902-e11f-4575-b1c3-92e2b7e86167" />
