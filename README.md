@@ -56,7 +56,7 @@
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (20)" src="https://github.com/user-attachments/assets/6a0d9c7b-8c6a-46a6-a74b-7ce7d2cc97cb" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (21)" src="https://github.com/user-attachments/assets/a174a34a-383b-470e-8486-eb9bc943cd91" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (22)" src="https://github.com/user-attachments/assets/aab422d4-4f55-4046-ab87-30b9f2352055" />
-<img width="1280" height="720" alt="Legal AI Chatbot Project Report (demo)" src="https://github.com/user-attachments/assets/68d4ea73-94e7-4a08-818c-dd4bbef0e58f"/>(https://youtu.be/GFpilFkehSo)
+[![시연 영상 링크](https://img.youtube.com/vi/GFpilFkehSo/0.jpg)](https://www.youtube.com/watch?v=GFpilFkehSo)
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (24)" src="https://github.com/user-attachments/assets/26ed3600-488a-43e0-895d-e6af7b47ac2e" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (25)" src="https://github.com/user-attachments/assets/2e097902-e11f-4575-b1c3-92e2b7e86167" />
 <img width="1280" height="720" alt="Legal AI Chatbot Project Report (26)" src="https://github.com/user-attachments/assets/6c9c54d8-bc75-406b-9813-350dc0c8247c" />
