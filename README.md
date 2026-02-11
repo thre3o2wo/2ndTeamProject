@@ -7,6 +7,77 @@
 - 박상용 김재학 김지훈 김효경
 - [KDT] 기업맞춤형 AI+X 융복합 인재 양성 과정 2차 팀프로젝트
 
+<table>
+  <tr>
+    <td width="150px" align="center"><b>구분</b></td>
+    <td><b>기술</b></td>
+  </tr>
+  
+  <tr>
+    <td align="center"><b>Programming</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center"><b>AI / LLM</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Upstage-SOLAR-6E3FF3?style=for-the-badge&logo=lightning&logoColor=white">
+      <img src="https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?style=for-the-badge&logo=openai&logoColor=white">
+      <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Data & Vector</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Pinecone-VectorDB-243A5E?style=for-the-badge&logo=pinecone&logoColor=white">
+      <img src="https://img.shields.io/badge/Cohere-Rerank-3FB58E?style=for-the-badge&logo=cohere&logoColor=white">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Document & OCR</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/EasyOCR-OCR-5DADE2?style=for-the-badge&logo=googlelens&logoColor=white">
+      <img src="https://img.shields.io/badge/pytesseract-OCR-00A4EF?style=for-the-badge&logo=googlelens&logoColor=white">
+      <img src="https://img.shields.io/badge/pdfplumber-PDF-FF0000?style=for-the-badge&logo=adobeacrobatreader&logoColor=white">
+      <img src="https://img.shields.io/badge/PyMuPDF-PDF-E0115F?style=for-the-badge&logo=adobeacrobatreader&logoColor=white">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Evaluation</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/RAGAS-Framework-FF8C00?style=for-the-badge&logo=target&logoColor=white">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>WEB Framework</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
+      <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Version Control</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+      <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center"><b>Deployment</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+    </td>
+  </tr>
+</table>
+
 # 🏠 법률 AI 상담 챗봇 (Housing Legal AI Chatbot)
 
 > **주택 임대차(전월세) 법률 상담을 위한 RAG 기반 AI 챗봇**
